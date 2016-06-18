@@ -1,0 +1,62 @@
+extends layout
+
+block content
+  h1= title
+  .btn-group(role='group', aria-label='...')
+      button.btn.btn-default(type='button') Team Profiles
+      button.btn.btn-default(type='button') Staduims
+      button.btn.btn-default(type='button') Matches
+      button.btn.btn-default(type='button') Season Round
+  h1.
+    Team Profiles 
+  ul
+    div.team-form
+      form(action='teamProfiles', method="post")
+        .form-group
+          label(for='name') Name
+          input#name.form-control(type='text', placeholder='Team Name', name="name")
+        .form-group
+          label(for='homeStadium') Home Stadium
+          input#home-staduim.form-control(type='text', placeholder='Home Staduim', name="homeStadium")
+        .form-group
+          label(for='Away Color') Away Color
+          input#away-color.form-control(type='text', placeholder='Away Color', name="awayColor")
+        .form-group
+          label(for='Home Color') Home Color
+          input#home-color.form-control(type='text', placeholder='Home Color', name="homeColor")
+        .form-group
+          label(for='Team Image') Team Image
+          input#team-image.form-control(type='text', placeholder='Team Image', name="teamImage")
+        .form-group
+          label(for='Country') Country
+          input#country.form-control(type='text', placeholder='Country', name="country")    
+        button.btn.btn-default(type='submit') Submit
+    if teamProfiles
+      table.table.table-striped
+        thead
+          tr
+            th #
+            th Name
+            th Home Staduim
+            th AwayColor
+            th Home Color
+            th Image
+            th Contry
+        tbody
+          each team, i in teamProfiles
+            tr
+              td= i
+              td= team.name
+              td= team.homeStadium
+              td= team.awayColor
+              td= team.homeColor
+              td
+                img.teamImage(src=team.imageUrl)
+              td= team.country
+block scripts
+
+
+
+
+   
+

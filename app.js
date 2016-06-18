@@ -1,12 +1,16 @@
+exports = module.exports;
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var chalk = require('chalk');
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var teamProfiles = require('./routes/teamProfiles');
+
 
 var app = express();
 
@@ -22,8 +26,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Paths
 app.use('/', routes);
 app.use('/users', users);
+app.use('/teamprofiles', teamProfiles);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -31,6 +37,8 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+
+
 
 // error handlers
 
