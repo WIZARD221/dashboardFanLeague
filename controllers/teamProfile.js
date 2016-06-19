@@ -38,20 +38,22 @@ var remove = function (req, res) {
         if(err){
             return res.status(500);
         }
-        return getAll(req, res);
+        return res.status(200);
     });
 };
 
 var update = function (req, res) {
     console.log("edit TeamProfile");
     var updates = req.body;
-    delete updates.id;
-    console.dir(updates);
+
+    delete updates.homeStadium;
+
     TeamProfile.update({_id: req.body.id}, updates, function(err){
         if(err){
             console.log(err);
             return res.status(500);
         }
+        // return res.status(200);
         return getAll(req, res);
     });
 };

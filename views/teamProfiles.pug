@@ -8,20 +8,20 @@ block content
       button.btn.btn-default(type='button') Matches
       button.btn.btn-default(type='button') Season Round
   ul
-    div.team-form
+    div#team-form
       form(action='teamProfiles', method="post")
         .form-group
           label(for='name') Name
           input#name.form-control(type='text', placeholder='Team Name', name="name")
         .form-group
           label(for='homeStadium') Home Stadium
-          input#home-staduim.form-control(type='text', placeholder='Home Staduim', name="homeStadium")
+          input#home-staduim.form-control(type='text', placeholder='Home Stadium', name="homeStadium")
         .form-group
-          label(for='Away Colour') Away Color
-          input#away-color.form-control(type='text', placeholder='Away Color', name="awayColor")
+          label(for='Away Colour') Away Colour
+          input#away-color.form-control(type='text', placeholder='Away Colour', name="awayColour")
         .form-group
-          label(for='Home Colour') Home Color
-          input#home-color.form-control(type='text', placeholder='Home Color', name="homeColor")
+          label(for='Home Colour') Home Colour
+          input#home-color.form-control(type='text', placeholder='Home Colour', name="homeColour")
         .form-group
           label(for='Team Image') Team Image
           input#team-image.form-control(type='text', placeholder='Team Image', name="imageUrl")
@@ -53,6 +53,7 @@ block content
               td= team.country
 block scripts
   script(src='/javascripts/teamProfile.js')
+  link(rel="stylesheet" href="/stylesheets/teamProfile.css")
 
 
    

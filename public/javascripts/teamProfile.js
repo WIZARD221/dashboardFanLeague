@@ -1,5 +1,6 @@
 function initTableEdit(){
     $('#team-profile-table').Tabledit({
+        restoreButton: false,
         url: 'teamprofiles',
         columns: {
             identifier: [0, 'id'],
