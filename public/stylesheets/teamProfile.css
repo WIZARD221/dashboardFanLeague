@@ -1,0 +1,15 @@
+.teamImage{
+    height: 40px;
+    width: 40px;
+}
+
+#team-form input{
+    width: 200px;
+}
+
+#team-profile-table td{
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
