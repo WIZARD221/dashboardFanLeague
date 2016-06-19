@@ -3,6 +3,6 @@ var router = express.Router();
 var TeamProfile = require('../controllers/TeamProfile');
 
 router.get('/', TeamProfile.getAll);
-router.post('/', TeamProfile.create);
+router.post('/', TeamProfile.resolveAction);
 
 module.exports = router;

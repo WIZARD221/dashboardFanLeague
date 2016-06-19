@@ -7,8 +7,6 @@ block content
       button.btn.btn-default(type='button') Staduims
       button.btn.btn-default(type='button') Matches
       button.btn.btn-default(type='button') Season Round
-  h1.
-    Team Profiles 
   ul
     div.team-form
       form(action='teamProfiles', method="post")
@@ -19,43 +17,42 @@ block content
           label(for='homeStadium') Home Stadium
           input#home-staduim.form-control(type='text', placeholder='Home Staduim', name="homeStadium")
         .form-group
-          label(for='Away Color') Away Color
+          label(for='Away Colour') Away Color
           input#away-color.form-control(type='text', placeholder='Away Color', name="awayColor")
         .form-group
-          label(for='Home Color') Home Color
+          label(for='Home Colour') Home Color
           input#home-color.form-control(type='text', placeholder='Home Color', name="homeColor")
         .form-group
           label(for='Team Image') Team Image
-          input#team-image.form-control(type='text', placeholder='Team Image', name="teamImage")
+          input#team-image.form-control(type='text', placeholder='Team Image', name="imageUrl")
         .form-group
           label(for='Country') Country
           input#country.form-control(type='text', placeholder='Country', name="country")    
         button.btn.btn-default(type='submit') Submit
     if teamProfiles
-      table.table.table-striped
+      table#team-profile-table.table.table-striped
         thead
           tr
-            th #
+            th ID
             th Name
             th Home Staduim
-            th AwayColor
+            th Away Color
             th Home Color
-            th Image
-            th Contry
+            th Team Image
+            th Country
         tbody
           each team, i in teamProfiles
             tr
-              td= i
+              td= team._id
               td= team.name
               td= team.homeStadium
-              td= team.awayColor
-              td= team.homeColor
-              td
-                img.teamImage(src=team.imageUrl)
+              td= team.awayColour
+              td= team.homeColour
+              td= team.imageUrl
+                //- img.teamImage(src=team.imageUrl)
               td= team.country
 block scripts
-
-
+  script(src='/javascripts/teamProfile.js')
 
 
    
