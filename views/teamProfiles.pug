@@ -48,12 +48,18 @@ block content
               td= team.homeStadium
               td= team.awayColour
               td= team.homeColour
-              td= team.imageUrl
-                //- img.teamImage(src=team.imageUrl)
+              td
+                img.teamImage(src=team.imageUrl)
               td= team.country
+    if stadiums
+    .stadiums
+      each stadium in stadiums
+        .stadium(value=stadium._id)= stadium.name
 block scripts
   script(src='/javascripts/teamProfile.js')
   link(rel="stylesheet" href="/stylesheets/teamProfile.css")
+  script(type="application/json" id="stadiumsJson")
+    =stadiums
 
 
    

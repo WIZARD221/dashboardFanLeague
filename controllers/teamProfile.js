@@ -1,17 +1,36 @@
 var mongoose = require('mongoose');
 var db = require('../config/db');
 var TeamProfile = db.model('TeamProfile');
+var Stadium = db.model('Stadium');
 
 var getAll =  function (req, res) {
-    TeamProfile.find({}, function(err,teamProfiles){
-        if(err){
-            return res.status(500);
-        }
-        return res.render('teamProfiles', { 
-            title: 'Team Profiles',
-            teamProfiles: teamProfiles
-        });
-    });
+        
+    var docs = {title: 'Team Profiles'};
+
+
+    TeamProfile.find({}).exec()
+    .then(function(teamProfilesFromDb){
+
+        docs["teamProfiles"] = teamProfilesFromDb;
+        return Stadium.find({}).exec();
+    })
+    .then(function (stadiumsFromDb) {
+        docs["stadiums"] = stadiumsFromDb;
+        return res.render('teamProfiles', docs);
+    })
+    .then(null, function() {
+        return res.status(500);
+    })
+
+    // TeamProfile.find({}, function(err,teamProfiles){
+    //     if(err){
+    //         return res.status(500);
+    //     }
+    //     return res.render('teamProfiles', { 
+    //         title: 'Team Profiles',
+    //         teamProfiles: teamProfiles
+    //     });
+    // });
 };
 
 
