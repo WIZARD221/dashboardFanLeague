@@ -1,0 +1,41 @@
+extends layout
+
+block content
+  h1= title
+  .btn-group(role='group', aria-label='...')
+      button.btn.btn-default(type='button') Team Profiles
+      button.btn.btn-default(type='button') Staduims
+      button.btn.btn-default(type='button') Matches
+      button.btn.btn-default(type='button') Season Round
+  div#match-form
+    form(action='matches', method="post")
+      .form-group
+        label(for='name') Name
+        input#name.form-control(type='text', placeholder='Team Name', name="name")
+      .form-group
+        label(for='homeStadium') Home Stadium
+        input#home-staduim.form-control(type='text', placeholder='Home Stadium', name="homeStadium")
+      .form-group
+        label(for='Away Colour') Away Colour
+        input#away-color.form-control(type='text', placeholder='Away Colour', name="awayColour")
+      .form-group
+        label(for='Home Colour') Home Colour
+        input#home-color.form-control(type='text', placeholder='Home Colour', name="homeColour")
+      .form-group
+        label(for='Team Image') Team Image
+        input#team-image.form-control(type='text', placeholder='Team Image', name="imageUrl")
+      .form-group
+        label(for='Country') Country
+        input#country.form-control(type='text', placeholder='Country', name="country")    
+      button.btn.btn-default(type='submit') Submit
+  #message
+  #tablecontent
+block scripts
+  script(src='/javascripts/editablegrid/editablegrid.js')
+  script(src='/javascripts/editablegrid/editablegrid_renderers.js')
+  script(src='/javascripts/editablegrid/editablegrid_editors.js')
+  script(src='/javascripts/editablegrid/editablegrid_validators.js')
+  script(src='/javascripts/editablegrid/editablegrid_utils.js')
+  script(src='/javascripts/editablegrid/editablegrid_charts.js')
+  script(src='/javascripts/matches.js')  
+  link(rel="stylesheet" href="/stylesheets/jquery-ui.css")
