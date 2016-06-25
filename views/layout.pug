@@ -29,7 +29,7 @@ html(lang="en")
             input.form-control(type='text', placeholder='Search...')
     .container-fluid
       .row
-        .col-sm-3.col-md-2.sidebar
+        .col-sm-1.col-md-1.sidebar
           ul.nav.nav-sidebar
             li.active
               a(href='#')
@@ -39,12 +39,11 @@ html(lang="en")
               a(href='#') Teams
             li
               a(href='#') Fans
-        .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+        .col-sm-11.col-sm-offset-1.col-md-12.col-md-offset-1.main
           block content
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js")
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous")
     script(src='https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js', integrity='sha256-55Jz3pBCF8z9jBO1qQ7cIf0L+neuPTD1u7Ytzrp2dqo=', crossorigin='anonymous')
-    script(src='/javascripts/jquery.tabledit.min.js')
 
     block scripts
       
