@@ -10,11 +10,7 @@ block content
   #jsGrid
 
 block scripts
-  script(src='/javascripts/jsgrid.js')
   script(src='/javascripts/matches.js')  
-  link(rel="stylesheet" href="/stylesheets/jsgrid-theme.css")
-  link(rel="stylesheet" href="/stylesheets/jsgrid.css")
-  link(rel="stylesheet" href="/stylesheets/jquery-ui.css")
   #data.hidden-data
     #matchesJson
       =matches
@@ -22,3 +18,9 @@ block scripts
       =stadiums
     #leaguesJson
       =leagues
+    #teamsJson
+      =teams
+    #matchRoundsJson
+      =matchRounds
+    #seasonsJson
+      =seasons

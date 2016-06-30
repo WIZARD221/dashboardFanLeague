@@ -4,6 +4,9 @@ var chalk = require('chalk');
 var Match = db.model('Match');
 var Stadium = db.model('Stadium');
 var League = db.model('League');
+var TeamProfile = db.model('TeamProfile');
+var SeasonRound = db.model('SeasonRound');
+var Season = db.model('Season');
 
 
 var getPage =  function (req, res) {  
@@ -20,11 +23,11 @@ var getPage =  function (req, res) {
                     "awayTeamRealScore": matchesFromDb[i].awayTeamRealScore,
                     "homeTeamRealScore": matchesFromDb[i].homeTeamRealScore,
                     "league": (matchesFromDb[i].league) ? matchesFromDb[i].league.id : null,
-                    "season" : (matchesFromDb[i].season) ? matchesFromDb[i].season.year : null, 
-                    "matchRound" : (matchesFromDb[i].matchRound) ? matchesFromDb[i].matchRound.title : null,
-                    "stadium" : (matchesFromDb[i].stadium) ? matchesFromDb[i].stadium : null, 
-                    "awayTeam" : (matchesFromDb[i].awayTeam) ? matchesFromDb[i].awayTeam.name : null, 
-                    "homeTeam" : (matchesFromDb[i].homeTeam) ? matchesFromDb[i].homeTeam.name : null,
+                    "season" : (matchesFromDb[i].season) ? matchesFromDb[i].season.id : null, 
+                    "matchRound" : (matchesFromDb[i].matchRound) ? matchesFromDb[i].matchRound.id : null,
+                    "stadium" : (matchesFromDb[i].stadium) ? matchesFromDb[i].stadium.id : null, 
+                    "awayTeam" : (matchesFromDb[i].awayTeam) ? matchesFromDb[i].awayTeam.id : null, 
+                    "homeTeam" : (matchesFromDb[i].homeTeam) ? matchesFromDb[i].homeTeam.id : null,
                     "matchDate" : matchesFromDb[i].matchDate
                     };
                 matches.push(match);
@@ -39,9 +42,18 @@ var getPage =  function (req, res) {
     })
      .then(function(stadiumsFromDb){
         docs["stadiums"] = JSON.stringify(stadiumsFromDb);
-        return League.find({}, '_id name teams').exec();
+        return League.find({}, '_id name teams').populate('teams').exec();
     }).then(function(leaguesFromDb){
         docs["leagues"] = JSON.stringify(leaguesFromDb);
+        return TeamProfile.find({}, '_id name').exec();
+    }).then(function (teamsFromDb) {
+        docs["teams"] = JSON.stringify(teamsFromDb);
+        return SeasonRound.find({}, '_id title').exec();
+    }).then(function (seasonRoundsFromDb) {
+        docs["matchRounds"] = JSON.stringify(seasonRoundsFromDb);
+        return Season.find({}, '_id year').exec();
+    }).then(function (seasonsFromDb) {
+        docs["seasons"] = JSON.stringify(seasonsFromDb);
         return res.render('matches', docs);
     });
 };
@@ -59,11 +71,11 @@ var get =  function (req, res) {
                     "awayTeamRealScore": matchesFromDb[i].awayTeamRealScore,
                     "homeTeamRealScore": matchesFromDb[i].homeTeamRealScore,
                     "league": (matchesFromDb[i].league) ? matchesFromDb[i].league.id : null,
-                    "season" : (matchesFromDb[i].season) ? matchesFromDb[i].season.year : null, 
-                    "matchRound" : (matchesFromDb[i].matchRound) ? matchesFromDb[i].matchRound.title : null,
-                    "stadium" : (matchesFromDb[i].stadium) ? matchesFromDb[i].stadium : null, 
-                    "awayTeam" : (matchesFromDb[i].awayTeam) ? matchesFromDb[i].awayTeam.name : null, 
-                    "homeTeam" : (matchesFromDb[i].homeTeam) ? matchesFromDb[i].homeTeam.name : null, 
+                    "season" : (matchesFromDb[i].season) ? matchesFromDb[i].season.id : null, 
+                    "matchRound" : (matchesFromDb[i].matchRound) ? matchesFromDb[i].matchRound.id : null,
+                    "stadium" : (matchesFromDb[i].stadium) ? matchesFromDb[i].stadium.id : null, 
+                    "awayTeam" : (matchesFromDb[i].awayTeam) ? matchesFromDb[i].awayTeam.id : null, 
+                    "homeTeam" : (matchesFromDb[i].homeTeam) ? matchesFromDb[i].homeTeam.id : null, 
                     "matchDate" : matchesFromDb[i].matchDate
                     };
                 matches.push(match);
