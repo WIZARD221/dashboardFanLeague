@@ -7,60 +7,14 @@ block content
       button.btn.btn-default(type='button') Staduims
       button.btn.btn-default(type='button') Matches
       button.btn.btn-default(type='button') Season Round
-  ul
-    div#team-form
-      form(action='teamProfiles', method="post")
-        .form-group
-          label(for='name') Name
-          input#name.form-control(type='text', placeholder='Team Name', name="name")
-        .form-group
-          label(for='homeStadium') Home Stadium
-          input#home-staduim.form-control(type='text', placeholder='Home Stadium', name="homeStadium")
-        .form-group
-          label(for='Away Colour') Away Colour
-          input#away-color.form-control(type='text', placeholder='Away Colour', name="awayColour")
-        .form-group
-          label(for='Home Colour') Home Colour
-          input#home-color.form-control(type='text', placeholder='Home Colour', name="homeColour")
-        .form-group
-          label(for='Team Image') Team Image
-          input#team-image.form-control(type='text', placeholder='Team Image', name="imageUrl")
-        .form-group
-          label(for='Country') Country
-          input#country.form-control(type='text', placeholder='Country', name="country")    
-        button.btn.btn-default(type='submit') Submit
-    if teamProfiles
-      table#team-profile-table.table.table-striped
-        thead
-          tr
-            th ID
-            th Name
-            th Home Staduim
-            th Away Color
-            th Home Color
-            th Team Image
-            th Country
-        tbody
-          each team, i in teamProfiles
-            tr
-              td= team._id
-              td= team.name
-              td= team.homeStadium
-              td= team.awayColour
-              td= team.homeColour
-              td
-                img.teamImage(src=team.imageUrl)
-              td= team.country
-    if stadiums
-    .stadiums
-      each stadium in stadiums
-        .stadium(value=stadium._id)= stadium.name
+  #jsGrid
+
 block scripts
-  script(src='/javascripts/teamProfile.js')
-  link(rel="stylesheet" href="/stylesheets/teamProfile.css")
-  script(type="application/json" id="stadiumsJson")
-    =stadiums
-
-
-   
-
+  script(src='/javascripts/teamProfile.js')  
+  #data.hidden-data
+    #stadiumsJson
+      =stadiums
+    #leaguesJson
+      =leagues
+    #teamsJson
+      =teams

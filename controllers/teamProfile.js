@@ -2,36 +2,59 @@ var mongoose = require('mongoose');
 var db = require('../config/db');
 var TeamProfile = db.model('TeamProfile');
 var Stadium = db.model('Stadium');
+var League = db.model('League');
 
-var getAll =  function (req, res) {
+var getPage =  function (req, res) {
         
     var docs = {title: 'Team Profiles'};
+    
 
+    var teamsPromise = TeamProfile.find({}).populate('stadium league').lean().exec();
+    var stadiumsPromise = Stadium.find({}, '_id name').lean().exec();
+    var leaguesPromise = League.find({}, '_id name').lean().exec();
 
-    TeamProfile.find({}).exec()
-    .then(function(teamProfilesFromDb){
+    var promises = [teamsPromise, stadiumsPromise, leaguesPromise];
 
-        docs["teamProfiles"] = teamProfilesFromDb;
-        return Stadium.find({}).exec();
-    })
-    .then(function (stadiumsFromDb) {
-        docs["stadiums"] = stadiumsFromDb;
+    Promise.all(promises).then(values => {
+        docs.teams = JSON.stringify(values[0]);
+        docs.stadiums = JSON.stringify(values[1]);
+        docs.leagues = JSON.stringify(values[2]);
+
         return res.render('teamProfiles', docs);
-    })
-    .then(null, function() {
-        return res.status(500);
-    })
-
-    // TeamProfile.find({}, function(err,teamProfiles){
-    //     if(err){
-    //         return res.status(500);
-    //     }
-    //     return res.render('teamProfiles', { 
-    //         title: 'Team Profiles',
-    //         teamProfiles: teamProfiles
-    //     });
-    // });
+    }).catch((err) => {
+        console.log(err);
+    });
 };
+
+
+
+var get =  function (req, res) { 
+    var matches = [];
+    Match.find({}).populate('awayTeam league homeTeam matchRound season stadium')
+         .exec(function(err, matchesFromDb){
+            {
+             for (var i = matchesFromDb.length - 1; i >= 0; i--) {
+                var match = {
+                    "id": matchesFromDb[i].id,
+                    "awayTeamFanScore": matchesFromDb[i].awayTeamFanScore,
+                    "homeTeamFanScore": matchesFromDb[i].homeTeamFanScore,
+                    "awayTeamRealScore": matchesFromDb[i].awayTeamRealScore,
+                    "homeTeamRealScore": matchesFromDb[i].homeTeamRealScore,
+                    "league": (matchesFromDb[i].league) ? matchesFromDb[i].league.id : null,
+                    "season" : (matchesFromDb[i].season) ? matchesFromDb[i].season.id : null, 
+                    "matchRound" : (matchesFromDb[i].matchRound) ? matchesFromDb[i].matchRound.id : null,
+                    "stadium" : (matchesFromDb[i].stadium) ? matchesFromDb[i].stadium.id : null, 
+                    "awayTeam" : (matchesFromDb[i].awayTeam) ? matchesFromDb[i].awayTeam.id : null, 
+                    "homeTeam" : (matchesFromDb[i].homeTeam) ? matchesFromDb[i].homeTeam.id : null, 
+                    "matchDate" : matchesFromDb[i].matchDate
+                    };
+                matches.push(match);
+                }   
+            }
+            return res.json(matches);
+        }
+    );
+}; 
 
 
 var create = function (req, res) {
@@ -77,26 +100,11 @@ var update = function (req, res) {
     });
 };
 
-var resolveAction = function (req, res) {
-    console.dir(req.body);
-    if (req.body.action == 'edit') {
-
-        return update(req, res)
-    }
-    else if(req.body.action == 'delete'){
-        console.dir("remove");
-        return remove(req, res)
-    }
-    else{
-        create(req, res)
-    }
-};
-
-
-module.exports = {getAll: getAll,
+module.exports = {getPage: getPage,
+                  get: get,
                   create: create, 
                   remove: remove, 
-                  resolveAction: resolveAction};
+                  update: update};
 
 
 
