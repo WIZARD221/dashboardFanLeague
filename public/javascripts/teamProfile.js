@@ -1,56 +1,11 @@
 $(function() {
-
-
-
-
-
-var ImageField = function(config) {
-    jsGrid.Field.call(this, config);
-};
- 
-ImageField.prototype = new jsGrid.Field({
- 
-    css: "image-field",            // redefine general property 'css'
-    align: "center",              // redefine general property 'align'
- 
- 
-    // sorter: function(date1, date2) {
-    //     return new Date(date1) - new Date(date2);
-    // },
- 
-    itemTemplate: function(value) {
-        return this._createImage(value);
-    },
- 
-    insertTemplate: function(value) {
-        return this._insertPicker = $("<input>").dropzone({ url: "/file/post" });;
-    },
- 
-    editTemplate: function(value) {
-        return this._editPicker =$("<input>").dropzone({ url: "/file/post" });;
-    },
- 
-    insertValue: function() {
-        return this._insertPicker.datepicker("getDate").toISOString();
-    },
- 
-    editValue: function() {
-        return this._editPicker.datepicker("getDate").toISOString();
-    },
-    _createImage: function(value) {
-            return $("<input>").attr("type", "image").attr("src", value);
-    }
-});
- 
-jsGrid.fields.image = ImageField;
-
     var stadiums = JSON.parse($("#stadiumsJson")[0].innerHTML);
     var leagues = JSON.parse($("#leaguesJson")[0].innerHTML);
     var teams = JSON.parse($("#teamsJson")[0].innerHTML);
 
     $("#jsGrid").jsGrid({
         height: "100%",
-        width: "100%",
+        width: "90%",
         filtering: true,
         inserting: true,
         editing: true,
@@ -97,11 +52,10 @@ jsGrid.fields.image = ImageField;
             { name: "league", type: "select", 
               items: leagues, valueField: "_id",
               textField: "name", valueType: "string", width: 75},
-            { name: "id", type: "text", width: 75, editing: false, visible: false },
+            { name: "_id", type: "text", width: 75, editing: false, visible: false },
             { name: "awayColour", type: "text", width: 50 },
             { name: "homeColour", type: "text", width: 50 },
             { name: "imageUrl", type: "image", width: 50 },
-            { name: "homeTeamRealScore", type: "text", width: 50 },
             { name: "stadium", type: "select", 
               items: stadiums, valueField: "_id",
               textField: "name", valueType: "string", width: 75 },

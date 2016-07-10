@@ -1,4 +1,5 @@
 $(function() {
+
     var ImageField = function(config) {
         jsGrid.Field.call(this, config);
     };
@@ -18,32 +19,63 @@ $(function() {
         },
      
         insertTemplate: function(value) {
-            return this._insertPicker = $("<input>").dropzone({ url: "/file/post" });;
+            var cloudinaryJson = JSON.parse($("#cloudinaryJson").text());
+            return this._insertPicker = $('<input>').dropzone({
+                url: cloudinaryJson.form_attrs.action,
+                init: function () {
+                    this.on('sending', function (file, xhr, formData) {
+                        formData.append('api_key', cloudinaryJson.hidden_fields.api_key);
+                        formData.append('timestamp', cloudinaryJson.hidden_fields.timestamp);
+                        formData.append('signature', cloudinaryJson.hidden_fields.signature);
+                    });
+                    this.on('success', function (file, response) {
+                        var imgInput = $('<input>').attr('src', response.url);
+                        $(this.element).parent().append(imgInput);
+                        console.log('Success! Cloudinary public ID is', response.public_id);
+                    });
+                }
+
+            })
         },
      
         editTemplate: function(value) {
-            return this._editPicker =$("<input>").dropzone({ url: "/file/post" });;
+            var cloudinaryJson = JSON.parse($("#cloudinaryJson").text());
+            return this._insertPicker = $('<input>').dropzone({
+                url: cloudinaryJson.form_attrs.action,
+                init: function () {
+                    this.on('sending', function (file, xhr, formData) {
+                        formData.append('api_key', cloudinaryJson.hidden_fields.api_key);
+                        formData.append('timestamp', cloudinaryJson.hidden_fields.timestamp);
+                        formData.append('signature', cloudinaryJson.hidden_fields.signature);
+                    });
+                    this.on('success', function (file, response) {
+                        $(this.element).closest('tr').next().find('.image-field input').attr('src', response.url)
+                        console.log('Success! Cloudinary public ID is', response.public_id);
+                    });
+                }
+
+            })
         },
      
-        insertValue: function() {
-            return this._insertPicker.datepicker("getDate").toISOString();
-        },
+        // insertValue: function() {
+        //     return this._insertPicker.datepicker("getDate").toISOString();
+        // },
      
         editValue: function() {
-            return this._editPicker.datepicker("getDate").toISOString();
+            return $("<input>").attr("src");
         },
         _createImage: function(value) {
                 return $("<input>").attr("type", "image").attr("src", value);
         }
     });
-    
+
     jsGrid.fields.image = ImageField;
 
-    var MyDateField = function(config) {
+    var DateField = function(config) {
         sGrid.Field.call(this, config);
     };
  
-    MyDateField.prototype = new jsGrid.Field({
+    DateField.prototype = new jsGrid.Field({
  
         css: "date-field",            // redefine general property 'css'
         align: "center",              // redefine general property 'align'
@@ -75,5 +107,5 @@ $(function() {
         }
     });
  
-    jsGrid.fields.date = MyDateField;
+    jsGrid.fields.date = DateField;
 });
