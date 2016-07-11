@@ -1,8 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var TeamProfile = require('../controllers/TeamProfile');
+var TeamProfiles = require('../controllers/TeamProfiles');
 
-router.get('/', TeamProfile.getAll);
-router.post('/', TeamProfile.resolveAction);
+router.get('/', TeamProfiles.get);
+router.get('/index', TeamProfiles.getPage);
+router.post('/', TeamProfiles.create);
+router.put('/', TeamProfiles.update);
+router.delete('/', TeamProfiles.remove);
 
 module.exports = router;

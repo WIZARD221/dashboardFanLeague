@@ -124,3 +124,8 @@
 .jsgrid-pager-page {
     padding: .2em .6em;
 }
+
+td.image-field input{
+    width: 50px;
+    height: 50px;
+}
