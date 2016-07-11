@@ -40,7 +40,7 @@ $(function() {
      
         editTemplate: function(value) {
             var cloudinaryJson = JSON.parse($("#cloudinaryJson").text());
-            return this._insertPicker = $('<input>').dropzone({
+            return this._editPicker = $('<input>').dropzone({
                 url: cloudinaryJson.form_attrs.action,
                 init: function () {
                     this.on('sending', function (file, xhr, formData) {
@@ -49,7 +49,8 @@ $(function() {
                         formData.append('signature', cloudinaryJson.hidden_fields.signature);
                     });
                     this.on('success', function (file, response) {
-                        $(this.element).closest('tr').next().find('.image-field input').attr('src', response.url)
+                        $(this.element).val(response.url);
+                        $(this.element).closest('tr').next().find('.image-field input').attr('src', response.url);
                         console.log('Success! Cloudinary public ID is', response.public_id);
                     });
                 }
@@ -57,12 +58,12 @@ $(function() {
             })
         },
      
-        // insertValue: function() {
-        //     return this._insertPicker.datepicker("getDate").toISOString();
-        // },
+        insertValue: function() {
+            return this._insertPicker.val();
+        },
      
         editValue: function() {
-            return $("<input>").attr("src");
+            return this._editPicker.val();
         },
         _createImage: function(value) {
                 return $("<input>").attr("type", "image").attr("src", value);

@@ -3,18 +3,13 @@ var db = require('../config/db');
 var TeamProfile = db.model('TeamProfile');
 var Stadium = db.model('Stadium');
 var League = db.model('League');
+var cloudinaryConfig = require('../config/cloudinary');
 var cloudinary = require('cloudinary');
 
-cloudinary.config({ 
-  cloud_name: 'hzrasexo1', 
-  api_key: '676693128923862', 
-
-});
+cloudinary.config(cloudinaryConfig);
 
 var getPage =  function (req, res) {
     
-   
-
     var docs = {title: 'Team Profiles', 
                 cloudinary: JSON.stringify(cloudinary.uploader.direct_upload())};
     
