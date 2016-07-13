@@ -53,6 +53,9 @@ $(function() {
             { name: "league", type: "select", 
               items: leagues, valueField: "_id",
               textField: "name", valueType: "string", width: 75},
+            { name: "season", type: "select", 
+              items: seasons, valueField: "_id",
+              textField: "year", valueType: "string", width: 75},
             { name: "_id", type: "text", width: 75, editing: false, visible: false },
             { type: "control" }
         ]
