@@ -14,7 +14,7 @@ var getPage =  function (req, res) {
                 cloudinary: JSON.stringify(cloudinary.uploader.direct_upload())};
     
 
-    var teamsPromise = TeamProfile.find({}).populate('stadium league').lean().exec();
+    var teamsPromise = TeamProfile.find({}).lean().exec();
     var stadiumsPromise = Stadium.find({}, '_id name').lean().exec();
     var leaguesPromise = League.find({}, '_id name').lean().exec();
 

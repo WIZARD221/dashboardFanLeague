@@ -6,12 +6,17 @@ var TeamProfileSchema = new Schema({
     name : String,
     country :  String,
     imageUrl : String,
-    league : mongoose.Schema.ObjectId,
+    league : {
+            type : mongoose.Schema.ObjectId, 
+            ref: 'League'
+    },
     players : {
         type :   [mongoose.Schema.ObjectId],
         default : []
     },
-    homeStadium : mongoose.Schema.ObjectId,
+    homeStadium :{
+            type : mongoose.Schema.ObjectId, ref: 'Stadium'
+        },
     homeColour : String,
     awayColour : String,
     keyWords : String
