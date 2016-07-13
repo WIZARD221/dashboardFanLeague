@@ -76,9 +76,12 @@ $(function() {
               items: stadiums, valueField: "_id",
               textField: "name", valueType: "string", width: 75 },
             { name: "matchDate", type: "text", width: 50 },
+            { name: "matchDateStart", type: "text", width: 50 },
             { type: "control" }
         ]
     });
+
+    $("input.jsgrid-button.jsgrid-mode-button").click();
 
     $(document).on("change", "table.jsgrid-table tr.jsgrid-edit-row td.jsgrid-align-center select, table.jsgrid-table tr.jsgrid-filter-row td.jsgrid-align-center select, table.jsgrid-table tr.jsgrid-insert-row td.jsgrid-align-center select", function(event) {
         setMainColumn(this);
