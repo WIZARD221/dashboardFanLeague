@@ -28,7 +28,8 @@ var getPage =  function (req, res) {
                     "stadium" : (matchesFromDb[i].stadium) ? matchesFromDb[i].stadium.id : null, 
                     "awayTeam" : (matchesFromDb[i].awayTeam) ? matchesFromDb[i].awayTeam.id : null, 
                     "homeTeam" : (matchesFromDb[i].homeTeam) ? matchesFromDb[i].homeTeam.id : null,
-                    "matchDate" : matchesFromDb[i].matchDate
+                    "matchDate" : matchesFromDb[i].matchDate,
+                    "matchDateStart" : matchesFromDb[i].matchDateStart
                     };
                 matches.push(match);
                 }   

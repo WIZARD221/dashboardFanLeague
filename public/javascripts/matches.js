@@ -76,6 +76,7 @@ $(function() {
               items: stadiums, valueField: "_id",
               textField: "name", valueType: "string", width: 75 },
             { name: "matchDate", type: "text", width: 50 },
+            { name: "matchDateStart", type: "text", width: 50 },
             { type: "control" }
         ]
     });
