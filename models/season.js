@@ -7,7 +7,7 @@ var SeasonSchema = new Schema({
         trim: true
     },
     league: {
-        type : mongoose.Schema.ObjectId, ref: 'LeagueSchema'
+        type : mongoose.Schema.ObjectId, ref: 'League'
     },
     created: {
         type: Date,

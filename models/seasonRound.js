@@ -7,10 +7,10 @@ var SeasonRoundSchema = new Schema({
         trim: true
     },
     season: {
-        type : mongoose.Schema.ObjectId, ref: 'SeasonSchema'
+        type : mongoose.Schema.ObjectId, ref: 'Season'
     },
     league: {
-        type : mongoose.Schema.ObjectId, ref: 'LeagueSchema'
+        type : mongoose.Schema.ObjectId, ref: 'League'
     },
     created: {
         type: Date,

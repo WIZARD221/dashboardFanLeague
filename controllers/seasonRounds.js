@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 var db = require('../config/db');
-var Stadium = db.model('Stadium');
 var League = db.model('League');
+var SeasonRound = db.model('SeasonRound');
+var Season = db.model('Season');
 var cloudinaryConfig = require('../config/cloudinary');
 var cloudinary = require('cloudinary');
 
@@ -9,18 +10,20 @@ cloudinary.config(cloudinaryConfig);
 
 var getPage =  function (req, res) {
     
-    var docs = {title: 'Stadiums', 
+    var docs = {title: 'SeasonRounds', 
                 cloudinary: JSON.stringify(cloudinary.uploader.direct_upload())};
     
-    var stadiumsPromise = Stadium.find({}).lean().exec();
+    var seasonRoundsPromise = SeasonRound.find({}).populate('league season').lean().exec();
     var leaguesPromise = League.find({}, '_id name').lean().exec();
+    var seasonsPromise = Season.find({}, '_id year').lean().exec();
 
-    var promises = [stadiumsPromise, leaguesPromise];
+    var promises = [seasonRoundsPromise, leaguesPromise, seasonsPromise];
 
     Promise.all(promises).then(values => {
-        docs.stadiums = JSON.stringify(values[0]);
+        docs.seasonRounds = JSON.stringify(values[0]);
         docs.leagues = JSON.stringify(values[1]);
-        return res.render('stadiums', docs);
+        docs.seasons = JSON.stringify(values[2]);
+        return res.render('seasonRounds', docs);
     }).catch((err) => {
         console.log(err);
     });
@@ -29,32 +32,29 @@ var getPage =  function (req, res) {
 
 
 var get =  function (req, res) { 
-    Stadiums.find({}).lean().exec().then(function (stadiumsFromDb) {
-        return res.json(stadiumsFromDb);
+    SeasonRound.find({}).lean().exec().then(function (seasonRoundsFromDb) {
+        return res.json(seasonRoundsFromDb);
     });
 }; 
 
 
 var create = function (req, res) {
-    var stadium = new Stadium();
+    var seasonRound = new SeasonRound();
     
-    stadium.name = req.body.name;
-    stadium.city = req.body.city;
-    stadium.stadiumSize = req.body.stadiumSize;
-    stadium.imageUrl = req.body.imageUrl;
-    stadium.locationCoordinates = req.body.locationCoordinates;
-    stadium.league = (req.body.league) ? req.body.league : null;
+    seasonRound.title = req.body.name;
+    seasonRound.season = (req.body.season) ? req.body.season : null;
+    seasonRound.league = (req.body.league) ? req.body.league : null;
 
-    stadium.save(function(err){
+    seasonRound.save(function(err){
         if(err){
             return res.sendStatus(500);
         }
-        return res.json(stadium);
+        return res.json(seasonRound);
     });
 };
 
 var remove = function (req, res) {
-    Stadium.remove({_id: req.body.id}, function(err){
+    SeasonRound.remove({_id: req.body.id}, function(err){
         if(err){
             return res.sendStatus(500);
         }
@@ -65,14 +65,11 @@ var remove = function (req, res) {
 var update = function (req, res) {
     var updates = {};
 
-    updates.name = req.body.name;
-    updates.city = req.body.city;
-    updates.stadiumSize = req.body.stadiumSize;
-    updates.imageUrl = req.body.imageUrl;
-    updates.locationCoordinates = (req.body.locationCoordinates) ? req.body.locationCoordinates : null;
+    updates.title = req.body.title;
+    updates.season = (req.body.season) ? req.body.season : null;
     updates.league = (req.body.league) ? req.body.league : null;
 
-    Stadium.update({_id: req.body._id}, updates, function(err){
+    SeasonRound.update({_id: req.body._id}, updates, function(err){
         if(err){
             console.log(err);
             return res.sendStatus(500);

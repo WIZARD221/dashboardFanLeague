@@ -1,11 +1,12 @@
 $(function() {
-    var stadiums = JSON.parse($("#stadiumsJson")[0].innerHTML);
-    var leagues = JSON.parse($("#leaguesJson")[0].innerHTML);
-    var teams = JSON.parse($("#teamsJson")[0].innerHTML);
+    var seasonRounds = JSON.parse($("#seasonRoundsJson").text());
+
+    var leagues = $("#leaguesJson").text() ?  JSON.parse($("#leaguesJson").text()) : {};
+    var seasons = $("#seasonsJson").text() ?  JSON.parse($("#seasonsJson").text()) : {};
 
     $("#jsGrid").jsGrid({
-        height: "100%",
-        width: "90%",
+        height: "auto",
+        width: "93%",
         filtering: true,
         inserting: true,
         editing: true,
@@ -16,53 +17,46 @@ $(function() {
         pageLoading: false,
         pageButtonCount: 5,
         deleteConfirm: "Do you really want to delete client?",
-        data: teams,
+        data: seasonRounds,
         controller: {
             loadData: function(filter) {
                  return $.ajax({
                     type: "GET",
-                    url: "/teamProfiles",
+                    url: "/seasonRounds",
                     data: filter
                 });
             },
             insertItem: function(item) {
                 return $.ajax({
                     type: "POST",
-                    url: "/teamProfiles",
+                    url: "/seasonRounds",
                     data: item
                 });
             },
             updateItem: function(item) {
                 return $.ajax({
                     type: "PUT",
-                    url: "/teamProfiles",
+                    url: "/seasonRounds",
                     data: item
                 });
             },
             deleteItem: function(item) {
                 return $.ajax({
                     type: "DELETE",
-                    url: "/teamProfiles",
+                    url: "/seasonRounds",
                     data: item
                 });
             }
         },
         fields: [
-            { name: "name", type: "text", width: 50 },
+            { name: "title", type: "text", width: 50 },
             { name: "league", type: "select", 
               items: leagues, valueField: "_id",
               textField: "name", valueType: "string", width: 75},
+            { name: "season", type: "select", 
+              items: seasons, valueField: "_id",
+              textField: "year", valueType: "string", width: 75},
             { name: "_id", type: "text", width: 75, editing: false, visible: false },
-            { name: "awayColour", type: "text", width: 50 },
-            { name: "homeColour", type: "text", width: 50 },
-            { name: "imageUrl", type: "image", width: 50 },
-            { name: "homeStadium", type: "select", 
-              items: stadiums, valueField: "_id",
-              textField: "name", valueType: "string", width: 75 },
-            { name: "players", type: "select", 
-              items: {}, valueField: "_id",
-              textField: "name", valueType: "string", width: 75 },
-            { name: "country", type: "text", width: 50 },
             { type: "control" }
         ]
     });

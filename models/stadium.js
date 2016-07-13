@@ -6,7 +6,10 @@ var StadiumSchema = new Schema({
     name : String,
     city :  String,
     imageUrl : String,
-    league : mongoose.Schema.ObjectId,
+    league :{
+            type : mongoose.Schema.ObjectId, 
+            ref: 'League'
+    },
     stadiumSize : Number,
     locationCoordinates: {
         type: [Number],
