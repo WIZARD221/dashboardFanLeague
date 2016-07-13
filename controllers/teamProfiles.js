@@ -10,7 +10,7 @@ cloudinary.config(cloudinaryConfig);
 
 var getPage =  function (req, res) {
     
-    var docs = {title: 'Team Profiles', 
+    var docs = {title: 'Team Profiles', domain: req.get('host'),
                 cloudinary: JSON.stringify(cloudinary.uploader.direct_upload())};
     
 

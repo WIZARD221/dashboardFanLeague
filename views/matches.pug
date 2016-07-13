@@ -3,10 +3,10 @@ extends layout
 block content
   h1= title
   .btn-group(role='group', aria-label='...')
-      button.btn.btn-default(type='button') Team Profiles
-      button.btn.btn-default(type='button') Staduims
-      button.btn.btn-default(type='button') Matches
-      button.btn.btn-default(type='button') Season Round
+      a.btn.btn-default(type='button', href='../teamprofiles/index') Team Profiles
+      a.btn.btn-default(type='button', href='../stadiums/index') Stadiums
+      a.btn.btn-default(type='button', href='../matches/index') Matches
+      a.btn.btn-default(type='button', href='../seasonRounds/index') Season Rounds
   #jsGrid
 
 block scripts
