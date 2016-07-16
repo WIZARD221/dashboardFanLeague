@@ -13,11 +13,13 @@ var getPage =  function (req, res) {
                 cloudinary: JSON.stringify(cloudinary.uploader.direct_upload())};
     
     var articlePromise = Article.find({}).lean().exec();
+    var teamsPromise = TeamProfile.find({}, '_id name').lean().exec();
 
-    var promises = [articlePromise];
+    var promises = [articlePromise, teamsPromise];
 
     Promise.all(promises).then(values => {
         docs.articles = JSON.stringify(values[0]);
+        docs.teams = JSON.stringify(values[1]);
         return res.render('articles', docs);
     }).catch((err) => {
         console.log(err);
