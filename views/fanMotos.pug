@@ -8,14 +8,16 @@ block content
       a.btn.btn-default(type='button', href='../fanMatches/index') Fan Matches
       a.btn.btn-default(type='button', href='../fanDuties/index')  Fan Duties
       a.btn.btn-default(type='button', href='../levels/index') Levels
-      a.btn.btn-default(type='button', href='../fanMotos/index') Fan Motos
+      a.btn.btn-default(type='button', href='../fanMotos/index') FAn Motos
       a.btn.btn-default(type='button', href='../profiles/index') Profiles
   #jsGrid
 
 block scripts
-  script(src='/javascripts/prizes.js') 
+  script(src='/javascripts/fanMotos.js') 
   #data.hidden-data
     #cloudinaryJson
       =cloudinary
-    #prizesJson
-      =prizes
+    #fanMotosJson
+      =fanMotos
+    #teamsJson
+      =teams
