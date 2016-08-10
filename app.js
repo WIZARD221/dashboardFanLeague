@@ -17,6 +17,7 @@ var articles = require('./routes/articles');
 var teamSeasons = require('./routes/teamSeasons');
 var polls = require('./routes/polls');
 var trivias = require('./routes/trivias');
+var achievements = require('./routes/achievements');
 
 var app = express();
 
@@ -43,6 +44,7 @@ app.use('/articles', articles);
 app.use('/teamSeasons', teamSeasons);
 app.use('/polls', polls);
 app.use('/trivias', trivias);
+app.use('/achievements', achievements);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
