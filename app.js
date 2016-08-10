@@ -20,6 +20,7 @@ var trivias = require('./routes/trivias');
 var achievements = require('./routes/achievements');
 var prizes = require('./routes/prizes');
 var fanMotos = require('./routes/fanMotos');
+var fanLevels = require('./routes/fanLevels');
 
 var app = express();
 
@@ -49,6 +50,7 @@ app.use('/trivias', trivias);
 app.use('/achievements', achievements);
 app.use('/prizes', prizes);
 app.use('/fanMotos', fanMotos);
+app.use('/fanLevels', fanLevels);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
