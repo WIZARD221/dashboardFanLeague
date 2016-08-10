@@ -25,7 +25,6 @@ var TriviaSchema = new Schema({
     correctAnswer: {
         type: Number
     },
-
     team : {
         type : mongoose.Schema.ObjectId, ref: 'TeamProfile'
     },
