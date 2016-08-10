@@ -15,6 +15,7 @@ var stadiums = require('./routes/stadiums');
 var seasonRounds = require('./routes/seasonRounds');
 var articles = require('./routes/articles');
 var teamSeasons = require('./routes/teamSeasons');
+var polls = require('./routes/polls');
 
 var app = express();
 
@@ -39,6 +40,7 @@ app.use('/stadiums', stadiums);
 app.use('/seasonRounds', seasonRounds);
 app.use('/articles', articles);
 app.use('/teamSeasons', teamSeasons);
+app.use('/polls', polls);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
