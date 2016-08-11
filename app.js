@@ -22,6 +22,7 @@ var prizes = require('./routes/prizes');
 var fanMotos = require('./routes/fanMotos');
 var fanLevels = require('./routes/fanLevels');
 var fanDuties = require('./routes/fanDuties');
+var fanMatches = require('./routes/fanMatches');
 
 var app = express();
 
@@ -53,6 +54,7 @@ app.use('/prizes', prizes);
 app.use('/fanMotos', fanMotos);
 app.use('/fanLevels', fanLevels);
 app.use('/fanDuties', fanDuties);
+app.use('/fanMatches', fanMatches);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
