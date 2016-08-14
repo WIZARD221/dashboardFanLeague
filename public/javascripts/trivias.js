@@ -57,7 +57,7 @@ $(function() {
             { name: "triviaQuestion", type: "text", width: 50 },
             { name: "correctAnswer", type: "text", width: 50 },
             { name: "triviaTime", type: "text", width: 50 },
-            { name: "generalImage", type: "text", width: 50 },
+            { name: "generalImage", type: "image", width: 50 },
             { name: "correctAnswer", type: "text", width: 50 },
             { name: "triviaType", type: "image", width: 50 },
             { name: "triviaLevel", type: "text", width: 50 },

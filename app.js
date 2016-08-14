@@ -23,6 +23,7 @@ var fanMotos = require('./routes/fanMotos');
 var fanLevels = require('./routes/fanLevels');
 var fanDuties = require('./routes/fanDuties');
 var fanMatches = require('./routes/fanMatches');
+var fanProfiles = require('./routes/fanProfiles');
 
 var app = express();
 
@@ -55,6 +56,7 @@ app.use('/fanMotos', fanMotos);
 app.use('/fanLevels', fanLevels);
 app.use('/fanDuties', fanDuties);
 app.use('/fanMatches', fanMatches);
+app.use('/fanProfiles', fanProfiles);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

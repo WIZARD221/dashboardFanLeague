@@ -1,6 +1,13 @@
 var mongoose = require('mongoose');
 var db = require('../config/db');
+var FanProfile = db.model('FanProfile');
+var TeamProfile = db.model('TeamProfile');
+var League = db.model('League');
+var FanLevel = db.model('FanLevel');
+var Achievement = db.model('Achievement');
+var Prize = db.model('Prize');
 var FanMatch = db.model('FanMatch');
+var FanMoto = db.model('FanMoto');
 var cloudinaryConfig = require('../config/cloudinary');
 var cloudinary = require('cloudinary');
 
@@ -8,16 +15,30 @@ cloudinary.config(cloudinaryConfig);
 
 var getPage =  function (req, res) {
     
-    var docs = {title: 'fanMatches', 
+    var docs = {title: 'fanProfiles', 
                 cloudinary: JSON.stringify(cloudinary.uploader.direct_upload())};
     
-    var fanMatchesPromise = FanMatch.find({}).populate('season', 'year').populate('matchRound', 'title').lean().exec();
-    var promises = [fanMatchesPromise];
+    var fanProfilesPromise = FanProfile.find({}).lean().exec();
+    var teamsPromise = TeamProfile.find({}, '_id name league').lean().exec();
+    var leaguesPromise = League.find({}, '_id name').lean().exec();
+    var levelsPromise = FanLevel.find({}, '_id levelNumber').lean().exec();
+    var achievementsPromise = Achievement.find({}, '_id name').lean().exec();
+    var prizesPromise = Prize.find({}, '_id name').lean().exec();
+    var fanMotosPromise = FanMoto.find({}, '_id text').lean().exec();
+    var promises = [fanProfilesPromise, teamsPromise,
+                    leaguesPromise,
+                    levelsPromise, achievementsPromise,
+                    prizesPromise, fanMotosPromise];
 
     Promise.all(promises).then(values => {
-
-        docs.fanMatches = JSON.stringify(values[0]);
-        return res.render('fanMatches', docs);
+        docs.fanProfiles = JSON.stringify(values[0]);
+        docs.teams = JSON.stringify(values[1]);
+        docs.leagues = JSON.stringify(values[2]);
+        docs.levels = JSON.stringify(values[3]);
+        docs.achievements = JSON.stringify(values[4]);
+        docs.prizes = JSON.stringify(values[5]);
+        docs.fanMotos = JSON.stringify(values[6]);
+        return res.render('fanProfiles', docs);
     }).catch((err) => {
         console.log(err);
     });
@@ -36,14 +57,14 @@ var get =  function (req, res) {
       }
     }
 
-    FanMatch.find(query).populate('season matchRound').lean().exec().then(function (itemsFromDb) {
+    FanProfile.find(query).lean().exec().then(function (itemsFromDb) {
         return res.json(itemsFromDb);
     });
 }; 
 
 
 var create = function (req, res) {
-    var newItem = new FanMatch();
+    var newItem = new FanProfile();
     
     prepareItem(newItem, req.body);
 
@@ -56,7 +77,7 @@ var create = function (req, res) {
 };
 
 var remove = function (req, res) {
-    FanMatch.remove({_id: req.body.id}, function(err){
+    FanProfile.remove({_id: req.body.id}, function(err){
         if(err){
             return res.sendStatus(500);
         }
@@ -69,7 +90,7 @@ var update = function (req, res) {
     
     prepareItem(updates, req.body);
 
-    FanMatch.update({_id: req.body._id}, updates, function(err){
+    FanProfile.update({_id: req.body._id}, updates, function(err){
         if(err){
             console.log(err);
             return res.sendStatus(500);
