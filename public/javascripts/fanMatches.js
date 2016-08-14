@@ -1,9 +1,9 @@
+
+var grid;
+
 $(function() {
 
-    var fanMatches = $("#fanMatchesJson").text() ?  JSON.parse($("#fanMatchesJson").text()) : {};
-    fanMatches.unshift({name: "", _id: null});
-
-    $("#jsGrid").jsGrid({
+    grid = new jsGrid.Grid($("#jsGrid"), {
         height: "auto",
         width: "93%",
         filtering: true,
@@ -71,12 +71,23 @@ $(function() {
             { name: "timeBeforeMatchScore", type: "text", width: 50 },
             { name: "timeBeforeMatchArrivalTime", type: "text", width: 50 },
             { name: "finishMatchPosition", type: "text", width: 50 },
-            { name: "matchRound", type: "text", width: 50 },
-            { name: "season", type: "text", width: 50 },
+            { name: "matchRound", type: "text", editing: false, width: 50 },
+            { name: "season", type: "text", editing: false, width: 50 },
             { name: "_id", type: "text", width: 75, editing: false, visible: false },
             { type: "control" }
-        ]
+        ],
+
+        onDataLoaded: function(args) {
+
+            var data = args.data;
+            for (var i = 0; i < data.length; i++) {
+                data[i].season = data[i].season.year; 
+                data[i].matchRound = data[i].matchRound.title; 
+            }
+            args.grid.refresh()
+        }
     });
+
 
     $("input.jsgrid-button.jsgrid-mode-button").click();
 });
