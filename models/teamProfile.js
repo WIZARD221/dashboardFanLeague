@@ -19,7 +19,7 @@ var TeamProfileSchema = new Schema({
         },
     homeColour : String,
     awayColour : String,
-    keyWords : String
+    keyWords : []
 });
 
 module.exports = mongoose.model('TeamProfile', TeamProfileSchema);
