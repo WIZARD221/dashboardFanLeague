@@ -1,6 +1,8 @@
 $(function() {
 
    
+    var cloudinaryJson = JSON.parse($("#cloudinaryJson").text());
+
     var teams = $("#teamsJson").text() ?  JSON.parse($("#teamsJson").text()) : {};
     teams.unshift({name: "", _id: null});
     var polls = $("#pollsJson").text() ?  JSON.parse($("#pollsJson").text()) : {};
@@ -67,6 +69,69 @@ $(function() {
     });
 
     $("input.jsgrid-button.jsgrid-mode-button").click();
+    $("#pollForm").submit(function (event) {
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        $.ajax(
+        {
+            url : formURL,
+            type: "POST",
+            data : postData,
+            success:function(data, textStatus, jqXHR) 
+            {
+                //data: return data from server
+            },
+            error: function(jqXHR, textStatus, errorThrown) 
+            {
+                //if fails      
+            }
+        });
+        event.preventDefault(); //STOP default action
+    })
+
+
+    // Dropzone.options.url = cloudinaryJson.form_attrs.action;
+    $("input.answerImage").dropzone({
+                url: cloudinaryJson.form_attrs.action,
+                init: function () {
+                    this.on('sending', function (file, xhr, formData) {
+                        formData.append('api_key', cloudinaryJson.hidden_fields.api_key);
+                        formData.append('timestamp', cloudinaryJson.hidden_fields.timestamp);
+                        formData.append('signature', cloudinaryJson.hidden_fields.signature);
+                    });
+                    this.on('success', function (file, response) {
+                        $(this.element).val(response.url);
+                        $(this.element).closest('.controls').find('img').attr('src', response.url);
+                        console.log('Success! Cloudinary public ID is', response.public_id);
+                    });
+                }
+            });
+
+    $("#addAnswer").on("click", function(event){
+        event.preventDefault();
+        var numOfAnwers = $(".answer").length;
+        var answerInputs = $(".answer").eq(0).clone();
+        answerInputs.find(".answerText").attr('name', "answerText[" + numOfAnwers + "]");
+        answerInputs.find("input.answerImage").attr('name', "answerImage[" + numOfAnwers + "]");
+        answerInputs.find(".answerSum").attr('name', "answerSum[" + numOfAnwers + "]");
+        $(".answers").append(answerInputs);
+        answerInputs.find("input.answerImage").dropzone({
+                url: cloudinaryJson.form_attrs.action,
+                init: function () {
+                    this.on('sending', function (file, xhr, formData) {
+                        formData.append('api_key', cloudinaryJson.hidden_fields.api_key);
+                        formData.append('timestamp', cloudinaryJson.hidden_fields.timestamp);
+                        formData.append('signature', cloudinaryJson.hidden_fields.signature);
+                    });
+                    this.on('success', function (file, response) {
+                        $(this.element).val(response.url);
+                        $(this.element).closest('.controls').find('img').attr('src', response.url);
+                        console.log('Success! Cloudinary public ID is', response.public_id);
+                    });
+                }
+            });
+    })
+
 });
 
 
