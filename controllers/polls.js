@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var db = require('../config/db');
 var Poll = db.model('Poll');
+var PollItem = db.model('PollItem');
+var PollItemArrayList = db.model('PollItemArrayList');
 var TeamProfile = db.model('TeamProfile');
 var cloudinaryConfig = require('../config/cloudinary');
 var cloudinary = require('cloudinary');
@@ -20,6 +22,7 @@ var getPage =  function (req, res) {
     Promise.all(promises).then(values => {
         docs.polls = JSON.stringify(values[0]);
         docs.teams = JSON.stringify(values[1]);
+        docs.teamOptions = values[1];
         return res.render('polls', docs);
     }).catch((err) => {
         console.log(err);
@@ -39,7 +42,7 @@ var get =  function (req, res) {
       }
     }
 
-    Poll.find(query).lean().exec().then(function (itemsFromDb) {
+    Poll.find(query).lean().populate("answers").exec().then(function (itemsFromDb) {
         return res.json(itemsFromDb);
     });
 }; 
@@ -47,13 +50,52 @@ var get =  function (req, res) {
 
 var create = function (req, res) {
     var newItem = new Poll();
-    
-    prepareItem(newItem, req.body);
+    var pollItemArrayList = new PollItemArrayList();
 
+
+    var keys = [];
+    for (var key in req.body) {      
+        if (req.body.hasOwnProperty(key)) keys.push(key);
+    }
+
+
+
+    for (var i = 0; i < keys.length; i++) {
+        if (req.body['answerText[' + i +']']) {
+            var pollItem = new PollItem();
+            pollItem.text = req.body['answerText[' + i +']'];
+            pollItem.imageUrl = req.body['answerImage[' + i +']'];
+            newItem.answersSums[i] = parseInt(req.body['answerSum[' + i +']']);
+            pollItem.save(function(err){
+                if(err){
+                    console.log(err.message);
+                    return res.sendStatus(500);
+                } 
+            });
+            pollItemArrayList.PollItems.push(pollItem);
+        }
+        else{
+            break;
+        }
+    }
+
+    (req.body.team) ? req.body.team = req.body.team.replace(/"/g, '') : false;
+
+    prepareItem(newItem, req.body);
+    newItem.answers = pollItemArrayList;
     newItem.save(function(err){
         if(err){
+            console.log(err.message);
             return res.sendStatus(500);
         }
+
+        pollItemArrayList.save(function(err){
+            if(err){
+                console.log(err.message);
+                return res.sendStatus(500);
+            }
+        });
+
         return res.json(newItem);
     });
 };
