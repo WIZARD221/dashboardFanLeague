@@ -65,7 +65,13 @@ $(function() {
             { name: "answers", type: "text", width: 50 },
             { name: "_id", type: "text", width: 75, editing: false, visible: false },
             { type: "control" }
-        ]
+        ],
+
+
+        onDataLoaded: function(args) {
+            $("th:contains('created')").click();
+            $("th:contains('created')").click();
+        },
     });
 
     $("input.jsgrid-button.jsgrid-mode-button").click();
@@ -79,7 +85,7 @@ $(function() {
             data : postData,
             success:function(data, textStatus, jqXHR) 
             {
-                //data: return data from server
+                location.reload();
             },
             error: function(jqXHR, textStatus, errorThrown) 
             {
