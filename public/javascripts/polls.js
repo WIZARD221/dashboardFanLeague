@@ -101,7 +101,7 @@ $(function() {
                     });
                     this.on('success', function (file, response) {
                         $(this.element).val(response.url);
-                        $(this.element).closest('.controls').find('img').attr('src', response.url);
+                        $(this.element).closest('td').find('img').attr('src', response.url);
                         console.log('Success! Cloudinary public ID is', response.public_id);
                     });
                 }
@@ -109,12 +109,13 @@ $(function() {
 
     $("#addAnswer").on("click", function(event){
         event.preventDefault();
-        var numOfAnwers = $(".answer").length;
-        var answerInputs = $(".answer").eq(0).clone();
-        answerInputs.find(".answerText").attr('name', "answerText[" + numOfAnwers + "]");
-        answerInputs.find("input.answerImage").attr('name', "answerImage[" + numOfAnwers + "]");
-        answerInputs.find(".answerSum").attr('name', "answerSum[" + numOfAnwers + "]");
-        $(".answers").append(answerInputs);
+        var numOfAnswers = $("tr.answer").length;
+        var answerInputs = $("tr.answer").eq(0).clone();
+        answerInputs.find("td.number").text(numOfAnswers + 1);
+        answerInputs.find(".answerText").attr('name', "answerText[" + numOfAnswers + "]");
+        answerInputs.find("input.answerImage").attr('name', "answerImage[" + numOfAnswers + "]");
+        answerInputs.find(".answerSum").attr('name', "answerSum[" + numOfAnswers + "]");
+        $("table#answers").append(answerInputs);
         answerInputs.find("input.answerImage").dropzone({
                 url: cloudinaryJson.form_attrs.action,
                 init: function () {
@@ -131,6 +132,9 @@ $(function() {
                 }
             });
     })
+
+    $("ul.nav li.active").removeClass('active');
+    $("ul.nav li:contains('Teams')").addClass("active");
 
 });
 

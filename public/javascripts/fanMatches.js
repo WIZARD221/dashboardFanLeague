@@ -3,6 +3,11 @@ var grid;
 
 $(function() {
 
+    var seasons = $("#seasonsJson").text() ?  JSON.parse($("#seasonsJson").text()) : {};
+    seasons.unshift({name: "", _id: null});
+    var seasonRounds = $("#seasonRoundsJson").text() ?  JSON.parse($("#seasonRoundsJson").text()) : {};
+    seasonRounds.unshift({name: "", _id: null});
+
     grid = new jsGrid.Grid($("#jsGrid"), {
         height: "auto",
         width: "93%",
@@ -71,25 +76,31 @@ $(function() {
             { name: "timeBeforeMatchScore", type: "text", width: 50 },
             { name: "timeBeforeMatchArrivalTime", type: "text", width: 50 },
             { name: "finishMatchPosition", type: "text", width: 50 },
-            { name: "matchRound", type: "text", editing: false, width: 50 },
-            { name: "season", type: "text", editing: false, width: 50 },
+            { name: "matchRound", type: "select", 
+              items: seasonRounds, valueField: "_id",
+              textField: "title", valueType: "string", width: 75},
+            { name: "season", type: "select", 
+              items: seasons, valueField: "_id",
+              textField: "year", valueType: "string", width: 75},
             { name: "_id", type: "text", width: 75, editing: false, visible: false },
             { type: "control" }
         ],
 
-        onDataLoaded: function(args) {
+        // onDataLoaded: function(args) {
 
-            var data = args.data;
-            for (var i = 0; i < data.length; i++) {
-                data[i].season = data[i].season.year; 
-                data[i].matchRound = data[i].matchRound.title; 
-            }
-            args.grid.refresh()
-        }
+        //     var data = args.data;
+        //     for (var i = 0; i < data.length; i++) {
+        //         data[i].season = data[i].season ? data[i].season.year : ""; 
+        //         data[i].matchRound = data[i].matchRound ? data[i].matchRound.title : ""; 
+        //     }
+        //     args.grid.refresh()
+        // }
     });
 
 
     $("input.jsgrid-button.jsgrid-mode-button").click();
+    $("ul.nav li.active").removeClass('active');
+    $("ul.nav li:contains('Fans')").addClass("active");
 });
 
 

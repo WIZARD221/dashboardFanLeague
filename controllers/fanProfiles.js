@@ -18,7 +18,7 @@ var getPage =  function (req, res) {
     var docs = {title: 'fanProfiles', 
                 cloudinary: JSON.stringify(cloudinary.uploader.direct_upload())};
     
-    var fanProfilesPromise = FanProfile.find({}).lean().exec();
+    var fanProfilesPromise = FanProfile.find({}).populate('user').lean().exec();
     var teamsPromise = TeamProfile.find({}, '_id name league').lean().exec();
     var leaguesPromise = League.find({}, '_id name').lean().exec();
     var levelsPromise = FanLevel.find({}, '_id levelNumber').lean().exec();
@@ -57,7 +57,7 @@ var get =  function (req, res) {
       }
     }
 
-    FanProfile.find(query).lean().exec().then(function (itemsFromDb) {
+    FanProfile.find(query).populate('user').lean().exec().then(function (itemsFromDb) {
         return res.json(itemsFromDb);
     });
 }; 

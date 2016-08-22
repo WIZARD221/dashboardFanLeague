@@ -57,6 +57,8 @@ $(function() {
     });
 
     $("input.jsgrid-button.jsgrid-mode-button").click();
+    $("ul.nav li.active").removeClass('active');
+    $("ul.nav li:contains('Fans')").addClass("active");
 });
 
 

@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var db = require('../config/db');
 var FanMatch = db.model('FanMatch');
+var SeasonRound = db.model('SeasonRound');
+var Season = db.model('Season');
 var cloudinaryConfig = require('../config/cloudinary');
 var cloudinary = require('cloudinary');
 
@@ -12,11 +14,15 @@ var getPage =  function (req, res) {
                 cloudinary: JSON.stringify(cloudinary.uploader.direct_upload())};
     
     var fanMatchesPromise = FanMatch.find({}).populate('season', 'year').populate('matchRound', 'title').lean().exec();
-    var promises = [fanMatchesPromise];
+    var seasonsPromise = Season.find({}, '_id year').lean().exec();
+    var seasonRoundsPromise = SeasonRound.find({}).lean().exec();
+    var promises = [fanMatchesPromise, seasonsPromise, seasonRoundsPromise];
 
     Promise.all(promises).then(values => {
 
         docs.fanMatches = JSON.stringify(values[0]);
+        docs.seasons = JSON.stringify(values[1]);
+        docs.seasonRounds = JSON.stringify(values[2]);
         return res.render('fanMatches', docs);
     }).catch((err) => {
         console.log(err);
@@ -36,7 +42,7 @@ var get =  function (req, res) {
       }
     }
 
-    FanMatch.find(query).populate('season matchRound').lean().exec().then(function (itemsFromDb) {
+    FanMatch.find(query).lean().exec().then(function (itemsFromDb) {
         return res.json(itemsFromDb);
     });
 }; 

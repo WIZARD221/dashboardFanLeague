@@ -62,6 +62,7 @@ $(function() {
             }
         },
         fields: [
+            { name: "user", type: "text", width: 50 },
             { name: "league", type: "select", 
               items: leagues, valueField: "_id",
               textField: "name", valueType: "string", width: 75},
@@ -83,10 +84,22 @@ $(function() {
             { name: "score", type: "text", width: 50 },
             { name: "_id", type: "text", width: 75, editing: false, visible: false },
             { type: "control" }
-        ]
+        ],
+
+        onDataLoaded: function(args) {
+            var data = args.data;
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].user) {
+                    data[i].user = data[i].user.name; 
+                }
+            }
+            args.grid.refresh()
+        }
     });
 
     $("input.jsgrid-button.jsgrid-mode-button").click();
+    $("ul.nav li.active").removeClass('active');
+    $("ul.nav li:contains('Fans')").addClass("active");
 });
 
 

@@ -5,7 +5,7 @@ block content
   .btn-group(role='group', aria-label='...')
       a.btn.btn-default(type='button', href='../achievements/index') Achievements
       a.btn.btn-default(type='button', href='../prizes/index') Prizes
-      a.btn.btn-default(type='button', href='../fanMatches/index') Fan Matches
+      a.btn.btn-default.btn-primary(type='button', href='../fanMatches/index') Fan Matches
       a.btn.btn-default(type='button', href='../fanDuties/index')  Fan Duties
       a.btn.btn-default(type='button', href='../fanLevels/index') Fan Levels
       a.btn.btn-default(type='button', href='../fanMotos/index') Fan Motos
@@ -19,3 +19,7 @@ block scripts
       =cloudinary
     #fanMatchesJson
       =fanMatches
+    #seasonsJson
+      =seasons
+    #seasonRoundsJson
+      =seasonRounds
