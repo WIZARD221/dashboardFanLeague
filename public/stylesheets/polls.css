@@ -2,3 +2,10 @@ img.answerImage{
    height: 50px;
     width: 50px;
 }
+
+table#answers{
+    table-layout: auto;
+}
+#pollForm label.control-label{
+    display: inline-flex;
+}

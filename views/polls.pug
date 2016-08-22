@@ -7,52 +7,52 @@ block content
       a.btn.btn-default(type='button', href='../polls/index') Polls
       a.btn.btn-default(type='button', href='../trivias/index') Trivias
       a.btn.btn-default(type='button', href='../teamSeasons/index')  Team Seasons
-      a.btn.btn-default(type='button', href='../teamMatches/index') Team Matches
       a.btn.btn-default(type='button', href='../keywords/index') Keywords
-  form#pollForm.form-horizontal(action="../polls", method='post')
+  form#pollForm(action="../polls", method='post')
     .control-group
       label.control-label(for="inputTeam") Team
-        .controls
-          select#inputTeam(name='team')
-            each val in teamOptions
-              option(value=val._id)= val.name
+      .controls
+        select#inputTeam(name='team')
+          each val in teamOptions
+            option(value=val._id)= val.name
     .control-group
       label.control-label(for="inputQuestion") Question Text
-        .controls
-          input(name='question')#inputQuestion
+      .controls
+        input(name='question')#inputQuestion
     .control-group
       label.control-label(for="inputPollType") Poll Type
-        .controls
-          select#inputPollType(name='pollType')
-            option(value='4Texts') 4 Texts 
-            option(value='trueFalse') True False 
-            option(value='arrayOfPics') Array Of Pics
+      .controls
+        select#inputPollType(name='pollType')
+          option(value='4Texts') 4 Texts 
+          option(value='trueFalse') True False 
+          option(value='arrayOfPics') Array Of Pics
     .control-group
       label.control-label(for="inputLastMatchResult") Last Match Result
-        .controls
-          select#inputLastMatchResult(name='lastMatchResult')
-            option(value='win') Win
-            option(value='lose') Lose
-            option(value='tie') Tie
+      .controls
+        select#inputLastMatchResult(name='lastMatchResult')
+          option(value='win') Win
+          option(value='lose') Lose
+          option(value='tie') Tie
     .control-group
       label.control-label(for="inputLaunchDate") Launch Date
-        .controls
-          input#inputLaunchDate(name='launchDate')
-    .answers.inline
-      .answer
-        .control-group
-          label.control-label Answer Text
-            .controls
-              input.answerText(name='answerText[0]')
-        .control-group
-          label.control-label Image Url
-            .controls
-              input.answerImage(name='answerImage[0]')
-              img.answerImage
-        .control-group
-          label.control-label Sum
-            .controls
-              input.answerSum(name='answerSum[0]')
+      .controls
+        input#inputLaunchDate(name='launchDate')
+    table#answers.table-bordered.table-striped
+      tbody
+        tr
+          th Num
+          th Text
+          th ImageUrl
+          th answerSum
+        tr.answer
+          td.number 1
+          td 
+            input.answerText(name='answerText[0]')
+          td
+            input.answerImage(name='answerImage[0]')
+            img.answerImage
+          td
+            input.answerSum(name='answerSum[0]')
     .control-group
       button#submit.btn(type='submit') Submit
       button#addAnswer.btn Add Answer
