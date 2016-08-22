@@ -62,57 +62,8 @@ $(function() {
     });
 
     $("input.jsgrid-button.jsgrid-mode-button").click();
-
-    // $(document).on("change", "table.jsgrid-table tr.jsgrid-edit-row td.jsgrid-align-center select, table.jsgrid-table tr.jsgrid-filter-row td.jsgrid-align-center select, table.jsgrid-table tr.jsgrid-insert-row td.jsgrid-align-center select", function(event) {
-    //     setMainColumn(this);
-    // });
-
-    // $(document).on("focus", "table.jsgrid-table tr.jsgrid-edit-row td.jsgrid-align-center select, table.jsgrid-table tr.jsgrid-filter-row td.jsgrid-align-center select, table.jsgrid-table tr.jsgrid-insert-row td.jsgrid-align-center select", function(event) {
-    //     setSecondaryColumns(this);
-    // });
-
-
-    // function setMainColumn(select) {
-    //     var colName = $(select).closest('#jsGrid').find('.jsgrid-grid-header').find('th').eq($(select).parent().index()).text();
-    //     if (colName === "league") {
-    //         var leagueId = select.selectedOptions[0].value;
-    //         var league = $.grep(leagues, function(e){ return e._id == leagueId; })[0];
-    //         var teams = orderTeams(league);
-
-    //         var awayTeam = $(select).closest("tr").find("select")[1];
-    //         var homeTeam = $(select).closest("tr").find("select")[2];
-    //         replaceOptions(awayTeam, teams);
-    //         replaceOptions(homeTeam, teams);
-    //     }
-    // };
-
-    // function setSecondaryColumns(select) {
-    //     var colName = $(select).closest('#jsGrid').find('.jsgrid-grid-header').find('th').eq($(select).parent().index()).text();
-    //     if ($.inArray(colName,["awayTeam", "homeTeam"]) != -1) {
-    //         var leagueId = $(select).closest("tr").find("select")[0].selectedOptions[0].value;
-    //         var league = $.grep(leagues, function(e){ return e._id == leagueId; })[0];
-    //         var teams = orderTeams(league);
-
-    //         replaceOptions(select, teams);
-    //     }
-    // };
-
-    // function orderTeams(league) {
-    //     var teams = [];
-    //     for (var i = league.teams.length - 1; i >= 0; i--) {
-    //          teams.push({_id: league.teams[i]._id, name: league.teams[i].name})
-    //     }
-    //     return teams;
-    // };
-
-    // function replaceOptions(select , newOptions) {
-    //     $(select).empty();
-    //     for (var i = newOptions.length - 1; i >= 0; i--) {
-    //         $(select).append('<option value='+ newOptions[i]._id +'>'+ newOptions[i].name + '</option>');
-    //     }
-    // };
-
-
+    $("ul.nav li.active").removeClass('active');
+    $("ul.nav li:contains('Teams')").addClass("active");
 });
 
 
